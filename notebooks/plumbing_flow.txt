@@ -1,0 +1,3 @@
+Step 1:::decision:::determine the caller type.If the caller is personal (not related to a plumbing request) go to Step 2.If the caller is selling something go to Step 2:::Personal Call::step 2
+Step 2:::process:::Tell the caller you will pass along a message and collect: Name, Callback Number, Message:::next::Step 3
+
