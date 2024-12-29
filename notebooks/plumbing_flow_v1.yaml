@@ -38,8 +38,8 @@ step_7: |
     - If customer is less than 60 minutes away and needs Service Call booking, go to step_11
 
 step_8: |
-  - Determine how far the customer is
-    - If more than 45 mins, go to step_9
+  - Check again how far the customer is
+    - If less than 45 mins, go to step_9
     - If 45-60 mins, go to step_10
 
 step_9: |
