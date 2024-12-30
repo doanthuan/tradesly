@@ -3,6 +3,7 @@ step_0: |
     - If user request is about personal (not related to a plumbing request), go to step_1
     - If user request is about selling something, go to step_2
     - If user request is about a new lead (needs plumbing services), go to step_3
+    - If user request is about customer service (Past customer or customer with current booking), go to step_16
 
 step_1: |
   - Tell the caller you will pass along a message and collect: Name Callback Number Message
@@ -51,28 +52,52 @@ step_10: |
   - Schedule next available estimate appointment
   - End call
 
-step_11: |  
-  - Determine if service is an emergency
+step_11: |
+  - Determine if service is an emergency. Some example questions:"
+        + Is your house currently flooding?
+        + Can you shut the water off/do you know where the shutoffs are?
+        + How long has this been going on for? 
+      "
     - If yes, go to step_12
-    - If no, go to step_13
+    - If no, go to step_15
 
 step_12: |
   - Disclose $285 emergency dispatch fee
     - If after hours, go to step_13
     - If during business hours, go to step_14
-    - If regular appointment booking, go to step_15
 
-step_13:
+step_13: |
   - Schedule appointment for first appointment the next morning
   - Call Andrew if true emergency (rare)
   - Commit to following up with customer
 
-step_14:
+step_14: |
   - Schedule first available appointment
   - Contact Andrew to see if he can service the emergency sooner
   - Follow up with customer, if needed
 
-step_15:
+step_15: |
   - Disclose $139 Dispatch Fee
   - Book customer for next available appointment in ServiceTitan
+  - End call
+
+
+step_16: |
+  - Determine if customer is calling about UPCOMING booking or PAST/COMPLETED booking
+    - If UPCOMING booking, go to step_17
+    - If PAST/COMPLETED booking, go to step_18
+
+step_17: |
+  - Determine what the customer needs help with
+    - If customer wants to change an upcoming appointment, go to step_18
+    - If customer wants an updated arrival window, go to step_19
+    - If customer wants to cancel upcoming appointment, go to step_20
+
+step_18: |
+  - Get upcoming appointment information
+    - If upcoming appointment is today, go to step_19
+    - If upcoming appointment is not today, go to step_15
+
+step_19: |
+  - Change the appointment and send an SMS message to the owner immediately to inform them of the same day scheduling changes
   - End call
