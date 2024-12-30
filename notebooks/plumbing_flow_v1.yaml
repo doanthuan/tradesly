@@ -83,15 +83,15 @@ step_15: |
 
 
 step_16: |
-  - Determine if customer is calling about UPCOMING booking or PAST/COMPLETED booking
+  - Determine if customer is talking about UPCOMING booking or PAST/COMPLETED booking
     - If UPCOMING booking, go to step_17
-    - If PAST/COMPLETED booking, go to step_18
+    - If PAST/COMPLETED booking, go to step_24
 
 step_17: |
-  - Determine what the customer needs help with
+  - Ask user to determine what the customer needs help with
     - If customer wants to change an upcoming appointment, go to step_18
-    - If customer wants an updated arrival window, go to step_19
-    - If customer wants to cancel upcoming appointment, go to step_20
+    - If customer wants an updated arrival window, go to step_20
+    - If customer wants to cancel upcoming appointment, go to step_23
 
 step_18: |
   - Get upcoming appointment information
@@ -100,4 +100,37 @@ step_18: |
 
 step_19: |
   - Change the appointment and send an SMS message to the owner immediately to inform them of the same day scheduling changes
+  - End call
+
+step_20: |
+  - Get quoted window information
+    - If during/after quoted window, go to step_21
+    - If before quoted window, go to step_22
+
+step_21: |
+  - Tell customer you will try to contact the plumber
+  - Call Andrew asking about his arrival
+  - Follow up with customer as needed
+
+step_22: |
+  - Inform the customer that their current arrival window is still the most accurate information. The plumber will contact when he is on the way
+  - End call
+
+step_23: |
+  - Cancel the appointment
+  - Ask customer why they are cancelling and record in call notes
+  - If same day, send SMS to Andrew
+
+step_24: |
+  - Determine the reason for their call
+    - It is urgent / customer is upset, go to step_25
+    - If Customer has a non-urgent question about their service, go to step_26
+    - If Customer wants to book another appointment, go to step_15
+
+step_25: |
+  - Record Name, callback number, issue and reach out to Andrew with the issue via SMS at any time of the day
+  - Complete any required follow up with the customer
+
+step_26: |
+  - Record the customer's name, contact info, and question and put into the Summary on Service Titan
   - End call
