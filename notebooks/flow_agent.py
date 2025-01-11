@@ -224,6 +224,7 @@ def build_agent():
     - If you need to determine the condition for the next step, read your conversation history as well as last tool message to make a decision. If you are still not sure, ask user to clarify.
     - Go to next step by calling go_to_next_step tool.
     - If you have some example questions in your task instructions, please ask user one by one until you clear the condition.
+    - If there is end call instruction, please disclose the fee if needed and tell user exactly your current task and finish the call.
                     
     **Tools usage:**
     - You're provided with tools that you can select to implement your task steps. Choose the best matching tool for a step.
@@ -318,6 +319,7 @@ class Assistant:
     def __init__(self, runnable: Runnable, flow: Flow):
         self.runnable = runnable
         self.flow = flow
+        print("Assistant initialized")
 
     @observe()
     def __call__(self, state: State, config: RunnableConfig):
@@ -410,6 +412,25 @@ class FlowAgent:
             for event in events:
                 _print_event(event, _printed)
 
+    def chat(self, user_query: str, thread_id: str):
+
+        config = {
+            "configurable": {
+                # Checkpoints are accessed by thread_id
+                "thread_id": thread_id,
+            }
+        }
+
+        # user_queries = [
+        #     "Hi there, I want to call about my completed appointment",
+        #     "I just want to book another new appointment"
+        # ]
+
+        response = self.graph.invoke(
+                {"messages": ("user", user_query)}, config, stream_mode="values"
+            )
+        print("Last AI Message:", response["messages"][-1].content)
+        return response["messages"][-1].content
 
 
 
